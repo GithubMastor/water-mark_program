@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 from PIL import Image, ImageTk, ImageDraw, ImageFont
-import subprocess
+import os
 
 
 winder = tk.Tk()
@@ -22,6 +22,7 @@ button1.grid(row=2,column=1,columnspan=4, padx=10, pady=10)
 btna_img = Image.open('button_apply-watermark.png')
 ima = ImageTk.PhotoImage(btna_img)
 
+clear_img = False
 
 def upload_file():
     f_types = [('Jpg Files', '*.jpg'),
@@ -36,7 +37,6 @@ def upload_file():
     e1.grid(row=4, column=2, columnspan=2)
     e1.image = img
     e1['image'] = img
-
     search_button = Button(text="Apply Watermark", width=30, command=lambda: watermarker(filename))
     search_button.configure(image=ima, width=ima.width(), bg='#FFFFFF',borderwidth=0)
     search_button.grid(row=3, column=1, columnspan=4, padx=10, pady=10)
@@ -59,7 +59,9 @@ def watermarker(imz):
     imgnmz = imgpath(image.filename)
     image.show('wtrmrk_' + imgnmz[0])
     image.save(imgnmz[1] + 'wtrmrk_' + imgnmz[0] + '.jpg')
-
+    path=os.path.realpath(imgnmz[1])
+    os.startfile(path)
+    image.close()
 
 
 winder.mainloop()  # Keep the window open
